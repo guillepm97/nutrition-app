@@ -1,25 +1,20 @@
 <ion-tabs>
-
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="diary">
+    <ion-tab-button tab="diary" *ngIf="!currentUserNutritionist">
       <ion-icon name="bookmarks"></ion-icon>
       <ion-label>Diary</ion-label>
     </ion-tab-button>
-
-    <ion-tab-button tab="clients">
+    <ion-tab-button tab="clients" *ngIf="currentUserNutritionist">
       <ion-icon name="contacts"></ion-icon>
       <ion-label>Clients</ion-label>
     </ion-tab-button>
-
     <ion-tab-button tab="profile">
       <ion-icon name="person"></ion-icon>
       <ion-label>Profile</ion-label>
     </ion-tab-button>
-
-    <ion-tab-button tab="feed">
+    <ion-tab-button tab="feed" *ngIf="!currentUserNutritionist">
       <ion-icon name="chatboxes"></ion-icon>
       <ion-label>Feed</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
-
 </ion-tabs>
