@@ -1,5 +1,7 @@
 {
   "name": "ionic-nutrition-app",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
