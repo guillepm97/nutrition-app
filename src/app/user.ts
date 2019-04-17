@@ -11,5 +11,9 @@ export class User {
   takenCalories: number;
   exerciseCalories: number;
   remainingCalories: number;
+  stepsGoal: number;
+  stepCount: number;
   listFood: Food[];
+  listAccepted: number[];
+  listPending: number[];
 }

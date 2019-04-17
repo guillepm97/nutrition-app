@@ -6,4 +6,41 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ion-item-divider color="light">
+    <ion-label>Accepted</ion-label>
+  </ion-item-divider>
+  <ion-list>
+    <ion-item *ngFor="let user of acceptedClients" [routerLink]="['./client-info/', user.id]">
+      <ion-avatar slot="start">
+        <img src="assets/img/client-avatar.png"
+             srcset="assets/img/client-avatar@2x.png 2x,
+                     assets/img/client-avatar@3x.png 3x">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{user.name}} {{user.surname}}</h2>
+        <h3>21 years old</h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-item-divider color="light">
+    <ion-label>Pending</ion-label>
+  </ion-item-divider>
+  <ion-list>
+    <ion-item *ngFor="let user of pendingClients">
+      <ion-avatar slot="start">
+        <img src="assets/img/client-avatar.png"
+             srcset="assets/img/client-avatar@2x.png 2x,
+                     assets/img/client-avatar@3x.png 3x">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{user.name}} {{user.surname}}</h2>
+        <h3>21 years old</h3>
+      </ion-label>
+      <ion-button fill="outline" slot="end" color="success" (click)="acceptClient(user.id)">
+        Accept
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>
