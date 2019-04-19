@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Create account
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center ion-margin-top ion-margin-bottom">
+      <ion-avatar class="user-avatar">
+        <img src="assets/img/client-avatar.png"
+             srcset="assets/img/client-avatar@2x.png 2x,
+                     assets/img/client-avatar@3x.png 3x">
+      </ion-avatar>
+    </ion-row>
+  </ion-grid>
+  <form (ngSubmit)="onSubmit()" #signUpForm="ngForm">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">First name</ion-label>
+        <ion-input type="text" name="name" placeholder="Jon" [(ngModel)]="name" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Last name</ion-label>
+        <ion-input type="text" name="surname" placeholder="Snow" [(ngModel)]="surname" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input type="email" name="email" placeholder="jonsnow@castleblack.com" [(ngModel)]="email" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Password</ion-label>
+        <ion-input type="password" name="password" placeholder="iknoweverything" [(ngModel)]="password" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Type</ion-label>
+        <ion-select interface="popover" name="type" [(ngModel)]="type" required>
+          <ion-select-option value="client">Client</ion-select-option>
+          <ion-select-option value="nutritionist">Nutritionist</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <ion-button class="ion-margin-top" expand="full" type="submit" [disabled]="!signUpForm.form.valid">Submit</ion-button>
+  </form>
+</ion-content>

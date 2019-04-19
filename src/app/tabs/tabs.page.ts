@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { UserService } from '../user.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-tabs',
@@ -12,11 +12,13 @@ export class TabsPage {
   currentUserNutritionist: boolean;
 
   constructor(private router: Router, private route: ActivatedRoute,
-              private userService: UserService) {}
+              public authService: AuthService) {}
 
   ngOnInit() {
-    this.currentUserNutritionist = this.userService.currentUserNutritionist();
-    this.redirectToCorrectTab();
+    this.authService.getCurrentUser().subscribe(user => {
+      this.currentUserNutritionist = user.type == 'nutritionist';
+      this.redirectToCorrectTab();
+    });
   }
 
   redirectToCorrectTab() {

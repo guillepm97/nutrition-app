@@ -1,0 +1,35 @@
+<ion-content padding>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center ion-margin-top">
+      <ion-item lines="none">
+        <img src="assets/img/ionic-logo.png"
+             srcset="assets/img/ionic-logo@2x.png 2x,
+                     assets/img/ionic-logo@3x.png 3x">
+      </ion-item>
+    </ion-row>
+
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <ion-row class="ion-margin-top ion-margin-bottom">
+        <ion-col>
+          <ion-item>
+            <ion-label>Email</ion-label>
+            <ion-input type="email" name="email" [(ngModel)]="email" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Password</ion-label>
+            <ion-input type="password" name="password" [(ngModel)]="password" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="6">
+          <ion-button expand="full" (click)="presentModal()">Sign up</ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button expand="full" type="submit" [disabled]="!loginForm.form.valid">Login</ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
+</ion-content>
