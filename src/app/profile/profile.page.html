@@ -6,4 +6,36 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ng-container *ngIf="user$ | async as user">
+    <ion-grid>
+      <ion-row class="ion-justify-content-center ion-margin-top">
+        <ion-avatar class="user-avatar">
+          <img src="assets/img/client-avatar.png"
+               srcset="assets/img/client-avatar@2x.png 2x,
+                       assets/img/client-avatar@3x.png 3x">
+        </ion-avatar>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <h4>{{user.name}} {{user.surname}}</h4>
+      </ion-row>
+    </ion-grid>
+
+    <ion-item-divider color="light">
+     <ion-label>
+       Information
+     </ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-label>Type of user: {{user.type}}</ion-label>
+    </ion-item>
+    <ion-item *ngIf="user.type == 'client'">
+      <ion-label>Daily calories: {{user.dailyCalories}}</ion-label>
+    </ion-item>
+    <ion-item *ngIf="user.type == 'client'">
+      <ion-label>Steps goal: {{user.stepsGoal}}</ion-label>
+    </ion-item>
+
+    <ion-button class="ion-margin-top" expand="full" (click)="onSignOut()">Sign out</ion-button>
+  </ng-container>
+</ion-content>

@@ -6,10 +6,16 @@ import { Observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
-interface User {
+export interface User {
   name: string;
   surname: string;
   type: string;
+  dailyCalories: number;
+  takenCalories: number;
+  exerciseCalories: number;
+  remainingCalories: number;
+  stepsGoal: number;
+  stepCount: number;
 }
 
 @Injectable({
@@ -71,10 +77,18 @@ export class AuthService {
     return new Promise<boolean>(async (resolve, reject) => {
       const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${uid}`);
 
+      const isNutritionist = type == 'nutritionist';
+
       const data: User = {
         name: name,
         surname: surname,
-        type: type
+        type: type,
+        dailyCalories: isNutritionist ? 0 : 2450,
+        takenCalories: 0,
+        exerciseCalories: 0,
+        remainingCalories: isNutritionist ? 0 : 2450,
+        stepsGoal: isNutritionist ? 0 : 10000,
+        stepCount: 0,
       }
 
       await userRef.set(data)
@@ -102,6 +116,13 @@ export class AuthService {
 
   async signIn(email: string, password: string) {
     await this.afAuth.auth.signInWithEmailAndPassword(email, password)
+      .catch((error) => {
+        this.presentAlert(error.message);
+      });
+  }
+
+  async signOut() {
+    await this.afAuth.auth.signOut()
       .catch((error) => {
         this.presentAlert(error.message);
       });
