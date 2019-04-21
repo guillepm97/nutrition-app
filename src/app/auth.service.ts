@@ -1,46 +1,32 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { Observable } from 'rxjs';
+
+import { User } from './user';
+import { UserService } from './user.service';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-
-export interface User {
-  name: string;
-  surname: string;
-  type: string;
-  dailyCalories: number;
-  takenCalories: number;
-  exerciseCalories: number;
-  remainingCalories: number;
-  stepsGoal: number;
-  stepCount: number;
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  uid: string;
 
   constructor(private ngZone: NgZone,
               private router: Router,
               public alertController: AlertController,
+              public userService: UserService,
               public afAuth: AngularFireAuth,
               public afs: AngularFirestore) {
     this.afAuth.auth.onAuthStateChanged(user => {
       if (user) {
-        this.uid = user.uid;
+        this.userService.setCurrentUserId(user.uid);
         this.ngZone.run(() => this.router.navigate(['/tabs']));
       } else {
         this.ngZone.run(() => this.router.navigate(['/login']));
       }
     });
-  }
-
-  getCurrentUser(): Observable<User> {
-    return this.afs.doc<User>(`users/${this.uid}`).valueChanges();
   }
 
   async signUp(name: string, surname: string, email: string, password: string, type: string): Promise<boolean> {

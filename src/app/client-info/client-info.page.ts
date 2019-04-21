@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { User } from '../user';
-import { UserService } from '../user.service';
+import { UserMock } from '../user-mock';
+import { UserMockService } from '../user-mock.service';
 
 @Component({
   selector: 'app-client-info',
@@ -11,7 +11,7 @@ import { UserService } from '../user.service';
 })
 export class ClientInfoPage implements OnInit {
   clientId: number;
-  selectedUser: User;
+  selectedUser: UserMock;
   dailyCalories: number;
   takenCalories: number;
   remainingCalories: number;
@@ -21,11 +21,11 @@ export class ClientInfoPage implements OnInit {
   surname: string;
 
   constructor(private route: ActivatedRoute,
-              private userService: UserService) { }
+              private userMockService: UserMockService) { }
 
   ngOnInit() {
     this.clientId = parseInt(this.route.snapshot.paramMap.get('id'));
-    this.selectedUser = this.userService.getUser(this.clientId);
+    this.selectedUser = this.userMockService.getUser(this.clientId);
     this.dailyCalories = this.selectedUser.dailyCalories;
     this.takenCalories = this.selectedUser.takenCalories;
     this.remainingCalories = this.selectedUser.remainingCalories;

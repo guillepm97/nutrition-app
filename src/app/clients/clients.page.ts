@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { User } from '../user'
-import { UserService } from '../user.service'
+import { UserMock } from '../user-mock'
+import { UserMockService } from '../user-mock.service'
 
 @Component({
   selector: 'app-clients',
@@ -9,11 +9,11 @@ import { UserService } from '../user.service'
   styleUrls: ['clients.page.scss']
 })
 export class ClientsPage {
-  users: User[];
-  acceptedClients: User[];
-  pendingClients: User[];
+  users: UserMock[];
+  acceptedClients: UserMock[];
+  pendingClients: UserMock[];
 
-  constructor(private userService: UserService) { }
+  constructor(private userMockService: UserMockService) { }
 
   ionViewWillEnter() {
     this.getUsers();
@@ -22,20 +22,20 @@ export class ClientsPage {
   }
 
   getUsers(): void {
-    this.users = this.userService.getUsers();
+    this.users = this.userMockService.getUsers();
   }
 
   getAcceptedClients(): void {
-    this.acceptedClients = this.userService.getAcceptedClients(this.userService.getCurrentUserId());
+    this.acceptedClients = this.userMockService.getAcceptedClients(this.userMockService.getCurrentUserId());
   }
 
   getPendingClients(): void {
-    this.pendingClients = this.userService.getPendingClients(this.userService.getCurrentUserId());
+    this.pendingClients = this.userMockService.getPendingClients(this.userMockService.getCurrentUserId());
   }
 
   acceptClient(id: number) {
-    let listAccepted: Array<number> = this.userService.getNutritionistAcceptedList(this.userService.getCurrentUserId());
-    let listPending: Array<number> = this.userService.getNutritionistPendingList(this.userService.getCurrentUserId());
+    let listAccepted: Array<number> = this.userMockService.getNutritionistAcceptedList(this.userMockService.getCurrentUserId());
+    let listPending: Array<number> = this.userMockService.getNutritionistPendingList(this.userMockService.getCurrentUserId());
     for (let user of this.users) {
       if (user.id == id) {
         listAccepted.push(id);

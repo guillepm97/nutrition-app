@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AuthService, User } from '../auth.service';
+import { User } from '../user';
+import { UserService } from '../user.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,10 +13,11 @@ import { AuthService, User } from '../auth.service';
 export class ProfilePage {
   user$: Observable<User>;
 
-  constructor(public authService: AuthService) { }
+  constructor(public userService: UserService,
+              public authService: AuthService) { }
 
   ngOnInit() {
-    this.user$ = this.authService.getCurrentUser();
+    this.user$ = this.userService.getCurrentUser();
   }
 
   onSignOut() {

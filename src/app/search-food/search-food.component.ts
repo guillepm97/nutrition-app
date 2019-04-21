@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
-import { Food } from '../food'
-import { UserService } from '../user.service';
-import { FoodService } from '../food.service';
+import { FoodMock } from '../food-mock'
+import { UserMockService } from '../user-mock.service';
+import { FoodMockService } from '../food-mock.service';
 
 
 @Component({
@@ -12,23 +12,23 @@ import { FoodService } from '../food.service';
   styleUrls: ['./search-food.component.scss'],
 })
 export class SearchFoodModal implements OnInit {
-  food: Food[];
+  food: FoodMock[];
 
   constructor(private modalController: ModalController,
-              private userService: UserService,
-              private foodService: FoodService) { }
+              private userMockService: UserMockService,
+              private foodMockService: FoodMockService) { }
 
   ngOnInit() {
-    this.food = this.foodService.getFood();
+    this.food = this.foodMockService.getFood();
   }
 
-  selectFood(food: Food) {
-    this.userService.addFood(food);
+  selectFood(food: FoodMock) {
+    this.userMockService.addFood(food);
     this.dismissModal();
   }
 
   setFilteredFood(foodName: string): void {
-    this.food = this.foodService.filterFood(foodName);
+    this.food = this.foodMockService.filterFood(foodName);
   }
 
   async dismissModal() {
