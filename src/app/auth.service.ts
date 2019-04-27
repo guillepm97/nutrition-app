@@ -75,6 +75,9 @@ export class AuthService {
         remainingCalories: isNutritionist ? 0 : 2450,
         stepsGoal: isNutritionist ? 0 : 10000,
         stepCount: 0,
+        selectedNutritionist: '',
+        currentNutritionist: '',
+        listPending: []
       }
 
       await userRef.set(data)

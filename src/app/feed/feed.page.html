@@ -5,5 +5,48 @@
 </ion-header>
 
 <ion-content>
+  <ng-container *ngIf="user$ | async as user">
+    <ng-container *ngIf="user.selectedNutritionist == ''">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="10" offset="1">
+            <h1 class="ion-text-center">
+              You have not choosen any nutritionist yet.
+            </h1>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="10" offset="1">
+            <h1 class="ion-text-center">
+              Choose now a<br>
+              nutritionist to help you with your diet! 🙋‍♂️
+            </h1>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button class="ion-margin-top" expand="full" (click)="presentModal()">
+              Select you nutritionist now
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ng-container>
 
+    <ng-container *ngIf="user.selectedNutritionist != ''">
+      <ion-card>
+        <ion-card-content>
+          Waiting for the nutritionist to accept your request...
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
+
+    <ng-container *ngIf="user.currentNutritionist != ''">
+      <ion-card>
+        <ion-card-content>
+          The nutritionist accepted your request!
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
+  </ng-container>
 </ion-content>

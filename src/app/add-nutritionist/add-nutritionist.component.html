@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-searchbar (ionInput)="setFilteredNutritionists($event.target.value)" placeholder="Search"></ion-searchbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="query$ | async as nutritionists">
+    <ion-list>
+      <ion-item *ngFor="let user of nutritionists" (click)="selectNutritionist(user.id)">
+        <ion-avatar slot="start">
+          <img src="assets/img/nutritionist-avatar.png"
+               srcset="assets/img/nutritionist-avatar@2x.png 2x,
+                       assets/img/nutritionist-avatar@3x.png 3x">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{user.name}} {{user.surname}}</h2>
+          <h3>60 years old</h3>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+</ion-content>

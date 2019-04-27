@@ -8,4 +8,9 @@ export interface User {
   remainingCalories: number;
   stepsGoal: number;
   stepCount: number;
+  selectedNutritionist: string;
+  currentNutritionist: string;
+  listPending: string[];
 }
+
+export interface UserId extends User { id: string; }
