@@ -77,6 +77,7 @@ export class AuthService {
         stepCount: 0,
         selectedNutritionist: '',
         currentNutritionist: '',
+        listAccepted: [],
         listPending: []
       }
 

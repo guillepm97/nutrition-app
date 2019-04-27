@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import { UserMock } from '../user-mock'
-import { UserMockService } from '../user-mock.service'
+import { User } from '../user';
+import { UserService} from '../user.service';
+
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-clients',
@@ -9,40 +12,42 @@ import { UserMockService } from '../user-mock.service'
   styleUrls: ['clients.page.scss']
 })
 export class ClientsPage {
-  users: UserMock[];
-  acceptedClients: UserMock[];
-  pendingClients: UserMock[];
+  user$: Observable<User>;
+  acceptedClients: Observable<User>[];
+  pendingClients: Observable<User>[];
 
-  constructor(private userMockService: UserMockService) { }
+  constructor(private userService: UserService,
+              private afs: AngularFirestore) { }
 
-  ionViewWillEnter() {
-    this.getUsers();
+  ngOnInit() {
+    this.user$ = this.userService.getCurrentUser();
     this.getAcceptedClients();
     this.getPendingClients();
   }
 
-  getUsers(): void {
-    this.users = this.userMockService.getUsers();
-  }
-
-  getAcceptedClients(): void {
-    this.acceptedClients = this.userMockService.getAcceptedClients(this.userMockService.getCurrentUserId());
-  }
-
-  getPendingClients(): void {
-    this.pendingClients = this.userMockService.getPendingClients(this.userMockService.getCurrentUserId());
-  }
-
-  acceptClient(id: number) {
-    let listAccepted: Array<number> = this.userMockService.getNutritionistAcceptedList(this.userMockService.getCurrentUserId());
-    let listPending: Array<number> = this.userMockService.getNutritionistPendingList(this.userMockService.getCurrentUserId());
-    for (let user of this.users) {
-      if (user.id == id) {
-        listAccepted.push(id);
-        this.acceptedClients.push(user);
-        listPending.splice(listPending.indexOf(user.id), 1);
-        this.pendingClients.splice(this.pendingClients.indexOf(user), 1);
+  getAcceptedClients() {
+    this.userService.getCurrentUser().subscribe(currentUser => {
+      let array: Observable<User>[] = [];
+      for (let accepted of currentUser.listAccepted) {
+        array.push(this.userService.getUserById(accepted));
       }
-    }
+
+      this.acceptedClients = array;
+    });
+  }
+
+  getPendingClients() {
+    this.userService.getCurrentUser().subscribe((currentUser) => {
+      let array: Observable<User>[] = [];
+      for (let pending of currentUser.listPending) {
+        array.push(this.userService.getUserById(pending));
+      }
+
+      this.pendingClients = array;
+    });
+  }
+
+  onAcceptClient(clientId: string, index: number) {
+    this.userService.acceptClient(clientId, index);
   }
 }

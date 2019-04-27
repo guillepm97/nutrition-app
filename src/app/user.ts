@@ -10,6 +10,7 @@ export interface User {
   stepCount: number;
   selectedNutritionist: string;
   currentNutritionist: string;
+  listAccepted: string[];
   listPending: string[];
 }
 

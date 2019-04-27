@@ -21,8 +21,12 @@ export class UserService {
     this.uid = id;
   }
 
+  getUserById(id: string): Observable<User> {
+    return this.afs.doc<User>(`users/${id}`).valueChanges();
+  }
+
   getCurrentUser(): Observable<User> {
-    return this.afs.doc<User>(`users/${this.uid}`).valueChanges();
+    return this.getUserById(this.uid);
   }
 
   getNutritionists(name: string): Observable<UserId[]> {
@@ -70,6 +74,39 @@ export class UserService {
           resolve(false);
           this.presentAlert(error.message);
         });
+    });
+  }
+
+  acceptClient(clientId: string, index: number) {
+    let nutritionistRef = this.afs.collection('users').doc(this.uid);
+    nutritionistRef.get().toPromise().then(doc => {
+      if (doc.exists) {
+        let nutritionist = doc.data();
+        for (let user of nutritionist.listPending) {
+          if (user == clientId) {
+            nutritionist.listAccepted.push(user);
+            nutritionist.listPending.splice(index, 1);
+            nutritionistRef.set(<User> nutritionist);
+          }
+        }
+      }
+    }).catch(error => {
+      this.presentAlert(error.message);
+    });
+    this.setCurrentNutritionist(clientId);
+  }
+
+  setCurrentNutritionist(clientId: string) {
+    let nutritionistId = this.uid;
+    let clientRef = this.afs.collection('users').doc(clientId);
+    clientRef.get().toPromise().then(doc => {
+      if (doc.exists) {
+        let client = doc.data();
+        client.currentNutritionist = nutritionistId;
+        clientRef.set(<User> client);
+      }
+    }).catch(error => {
+      this.presentAlert(error.message);
     });
   }
 
