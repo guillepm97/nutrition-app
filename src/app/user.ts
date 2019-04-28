@@ -7,10 +7,7 @@ export interface User {
   type: string;
   dailyCalories: number;
   takenCalories: number;
-  exerciseCalories: number;
   remainingCalories: number;
-  stepsGoal: number;
-  stepCount: number;
   selectedNutritionist: string;
   currentNutritionist: string;
   listFood: Food[];

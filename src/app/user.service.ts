@@ -29,15 +29,14 @@ export class UserService {
   getCurrentUser(): Observable<User> {
     return this.getUserById(this.uid);
   }
-  
+
   addFood(food: Food) {
     let docRef = this.afs.collection('users').doc(this.uid);
     docRef.get().toPromise().then(doc => {
       if (doc.exists) {
         let user = doc.data();
         user.takenCalories = user.takenCalories + food.calories;
-        user.remainingCalories = user.dailyCalories - user.takenCalories +
-                                 user.exerciseCalories;
+        user.remainingCalories = user.dailyCalories - user.takenCalories;
         user.listFood.push(food);
         docRef.set(<User> user);
       }
@@ -52,8 +51,7 @@ export class UserService {
       if (doc.exists) {
         let user = doc.data();
         user.takenCalories = user.takenCalories - food.calories;
-        user.remainingCalories = user.dailyCalories - user.takenCalories +
-                                 user.exerciseCalories;
+        user.remainingCalories = user.dailyCalories - user.takenCalories;
         user.listFood.splice(index, 1);
         docRef.set(user);
       }
