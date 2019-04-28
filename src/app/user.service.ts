@@ -110,6 +110,25 @@ export class UserService {
     });
   }
 
+  setClientData(id: string, dailyCalories: number) {
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${id}`);
+
+    userRef.update({ dailyCalories: dailyCalories })
+      .catch((error) => {
+        this.presentAlert(error.message);
+      });
+  }
+
+  setClientFeed(id: string, dailyCalories: number) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${id}`);
+
+    userRef.update({ feed: firestore.FieldValue.arrayUnion(`Your daily
+      calorie intake has been set to ${dailyCalories} by your nutritionist.`) })
+      .catch((error) => {
+        this.presentAlert(error.message);
+      });
+  }
+
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
       header: 'Error',

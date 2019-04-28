@@ -29,7 +29,7 @@
        Information
      </ion-label>
     </ion-item-divider>
-    <ion-item><ion-label>Daily calories: {{user.dailyCalories}}</ion-label></ion-item>
+    <ion-item (click)="onSelectData()"><ion-label>Daily calories: {{user.dailyCalories}}</ion-label></ion-item>
     <ion-item><ion-label>Taken calories: {{user.takenCalories}}</ion-label></ion-item>
     <ion-item><ion-label>Remaining calories: {{user.remainingCalories}}</ion-label></ion-item>
     <ion-item><ion-label>Steps goal: {{user.stepsGoal}}</ion-label></ion-item>

@@ -48,5 +48,11 @@
         </ion-card-content>
       </ion-card>
     </ng-container>
+
+    <ion-card *ngFor="let message of user.feed">
+      <ion-card-content>
+        {{ message }}
+      </ion-card-content>
+    </ion-card>
   </ng-container>
 </ion-content>

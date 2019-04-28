@@ -13,6 +13,7 @@ export interface User {
   currentNutritionist: string;
   listAccepted: string[];
   listPending: string[];
+  feed: string[];
 }
 
 export interface UserId extends User { id: string; }
