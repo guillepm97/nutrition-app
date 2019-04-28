@@ -4,7 +4,7 @@
       Diary
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="searchFood()">
+      <ion-button color="primary" (click)="searchFood()">
         <ion-icon name="add"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -19,14 +19,16 @@
       </ion-row>
     </ion-grid>
 
-    <ion-list lines="none">
+    <ion-list>
       <ion-item-divider color="light">Food</ion-item-divider>
       <ion-item *ngFor="let item of user.listFood;index as i">
         <ion-label>{{item.name}}</ion-label>
         <ion-note slot="end">{{item.calories}} kcal</ion-note>
-        <ion-chip (click)="eliminateFood(item, i)" slot="end">
-          <ion-label>X</ion-label>
-        </ion-chip>
+        <ion-buttons slot="end">
+          <ion-button color="primary" (click)="eliminateFood(item, i)">
+            <ion-icon name="remove-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
       </ion-item>
 
     </ion-list>

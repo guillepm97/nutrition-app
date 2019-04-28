@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-searchbar (ionInput)="setFilteredFood($event.target.value)" placeholder="Search Food"></ion-searchbar>
+    <ion-searchbar (ionInput)="setFilteredFood($event.target.value)" placeholder="Search"></ion-searchbar>
     <ion-buttons slot="end">
       <ion-button (click)="dismissModal()">Close</ion-button>
     </ion-buttons>
@@ -10,7 +10,7 @@
 <ion-content>
   <ng-container *ngIf="food$ | async as listFood">
     <ion-list>
-      <ion-item *ngFor="let item of listFood" lines="none" button="true" (click)="selectFood(item)">
+      <ion-item *ngFor="let item of listFood" button="true" (click)="selectFood(item)">
         {{item.name}}
         <ion-note slot="end">{{item.calories}} kcal</ion-note>
       </ion-item>

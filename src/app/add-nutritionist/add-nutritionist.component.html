@@ -13,10 +13,7 @@
       <ion-item *ngFor="let user of nutritionists" (click)="selectNutritionist(user.id)">
         <ion-avatar slot="start">
           <img *ngIf="user.picture != ''" [src]="user.picture">
-          <img *ngIf="user.picture == ''"
-               src="assets/img/nutritionist-avatar.png"
-               srcset="assets/img/nutritionist-avatar@2x.png 2x,
-                       assets/img/nutritionist-avatar@3x.png 3x">
+          <img *ngIf="user.picture == ''" src="assets/img/default-avatar.svg">
         </ion-avatar>
         <ion-label>
           <h2>{{user.name}} {{user.surname}}</h2>
