@@ -1,3 +1,5 @@
+import { Food } from './food';
+
 export interface User {
   picture: string;
   name: string;
@@ -11,9 +13,10 @@ export interface User {
   stepCount: number;
   selectedNutritionist: string;
   currentNutritionist: string;
+  listFood: Food[];
+  feed: string[];
   listAccepted: string[];
   listPending: string[];
-  feed: string[];
 }
 
 export interface UserId extends User { id: string; }

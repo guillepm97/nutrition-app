@@ -12,22 +12,24 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row class="ion-justify-content-center">
-      <h4>{{user.takenCalories}} kcal / {{user.dailyCalories}} kcal</h4>
-    </ion-row>
-  </ion-grid>
+  <ng-container *ngIf="user$ | async as user">
+    <ion-grid>
+      <ion-row class="ion-justify-content-center">
+        <h4>{{user?.takenCalories}} kcal / {{user?.dailyCalories}} kcal</h4>
+      </ion-row>
+    </ion-grid>
 
-  <ion-list lines="none">
-    <ion-item-divider color="light">Food</ion-item-divider>
-    <ion-item *ngFor="let item of food">
-      <ion-label>{{item.name}}</ion-label>
-      <ion-note slot="end">{{item.calories}} kcal</ion-note>
-      <ion-chip (click)="eliminateFood(item)" slot="end">
-        <ion-label>X</ion-label>
-      </ion-chip>
-    </ion-item>
+    <ion-list lines="none">
+      <ion-item-divider color="light">Food</ion-item-divider>
+      <ion-item *ngFor="let item of user.listFood;index as i">
+        <ion-label>{{item.name}}</ion-label>
+        <ion-note slot="end">{{item.calories}} kcal</ion-note>
+        <ion-chip (click)="eliminateFood(item, i)" slot="end">
+          <ion-label>X</ion-label>
+        </ion-chip>
+      </ion-item>
 
-    <ion-item-divider color="light">Exercise</ion-item-divider>
-  </ion-list>
+      <ion-item-divider color="light">Exercise</ion-item-divider>
+    </ion-list>
+  </ng-container>
 </ion-content>

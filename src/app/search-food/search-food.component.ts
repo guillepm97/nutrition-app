@@ -1,34 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { Observable, Subject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
-import { FoodMock } from '../food-mock'
-import { UserMockService } from '../user-mock.service';
-import { FoodMockService } from '../food-mock.service';
-
+import { Food } from '../food';
+import { UserService } from '../user.service'
+import { FoodService } from '../food.service';
 
 @Component({
   selector: 'app-search-food',
   templateUrl: './search-food.component.html',
   styleUrls: ['./search-food.component.scss'],
 })
-export class SearchFoodModal implements OnInit {
-  food: FoodMock[];
+
+export class SearchFoodModal {
+  food$: Observable<Food[]>;
+  foodFilter$: Subject<string>;
 
   constructor(private modalController: ModalController,
-              private userMockService: UserMockService,
-              private foodMockService: FoodMockService) { }
-
-  ngOnInit() {
-    this.food = this.foodMockService.getFood();
+              private userService: UserService,
+              private foodService: FoodService) {
+    this.foodFilter$ = new Subject<string>();
+    this.food$ = this.foodFilter$.pipe(
+      switchMap(name =>
+       this.foodService.getFood(name)
+      )
+    );
   }
 
-  selectFood(food: FoodMock) {
-    this.userMockService.addFood(food);
+  ionViewWillEnter() {
+    this.foodFilter$.next('');
+  }
+
+  selectFood(food: Food) {
+    this.userService.addFood(food);
     this.dismissModal();
   }
 
-  setFilteredFood(foodName: string): void {
-    this.food = this.foodMockService.filterFood(foodName);
+  setFilteredFood(name: string) {
+    this.foodFilter$.next(name);
   }
 
   async dismissModal() {

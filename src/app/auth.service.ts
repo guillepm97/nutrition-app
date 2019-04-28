@@ -78,9 +78,10 @@ export class AuthService {
         stepCount: 0,
         selectedNutritionist: '',
         currentNutritionist: '',
+        listFood: [],
+        feed: [],
         listAccepted: [],
-        listPending: [],
-        feed: []
+        listPending: []
       }
 
       await userRef.set(data)

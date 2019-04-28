@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { Observable } from 'rxjs';
 
-import { UserMock } from '../user-mock';
-import { FoodMock } from '../food-mock';
-import { UserMockService } from '../user-mock.service'
+import { User } from '../user';
+import { Food } from '../food';
+import { UserService } from '../user.service';
 
 import { SearchFoodModal } from '../search-food/search-food.component';
 
@@ -13,23 +14,21 @@ import { SearchFoodModal } from '../search-food/search-food.component';
   styleUrls: ['diary.page.scss']
 })
 export class DiaryPage {
-  food: FoodMock[];
-  user: UserMock;
-
+  user$: Observable<User>;
+  foodList: Food[];
   constructor(private modalController: ModalController,
-              private userMockService: UserMockService) { }
+              private userService: UserService) { }
 
   searchFood(): void {
     this.presentModal();
   }
 
-  eliminateFood(food: FoodMock){
-    this.userMockService.deleteFood(food);
+  eliminateFood(food: Food, index: number) {
+    this.userService.deleteFood(food, index);
   }
 
   ngOnInit() {
-    this.food = this.userMockService.getCurrentUserListFood();
-    this.user = this.userMockService.getCurrentUser();
+      this.user$ = this.userService.getCurrentUser();
   }
 
   async presentModal() {

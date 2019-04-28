@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { User, UserId } from './user';
+import { Food } from './food';
 
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { firestore } from 'firebase/app';
@@ -27,6 +28,38 @@ export class UserService {
 
   getCurrentUser(): Observable<User> {
     return this.getUserById(this.uid);
+  }
+  
+  addFood(food: Food) {
+    let docRef = this.afs.collection('users').doc(this.uid);
+    docRef.get().toPromise().then(doc => {
+      if (doc.exists) {
+        let user = doc.data();
+        user.takenCalories = user.takenCalories + food.calories;
+        user.remainingCalories = user.dailyCalories - user.takenCalories +
+                                 user.exerciseCalories;
+        user.listFood.push(food);
+        docRef.set(<User> user);
+      }
+    }).catch(error => {
+      this.presentAlert(error.message);
+    });
+  }
+
+  deleteFood(food: Food, index: number) {
+    let docRef = this.afs.collection('users').doc(this.uid);
+    docRef.get().toPromise().then(doc => {
+      if (doc.exists) {
+        let user = doc.data();
+        user.takenCalories = user.takenCalories - food.calories;
+        user.remainingCalories = user.dailyCalories - user.takenCalories +
+                                 user.exerciseCalories;
+        user.listFood.splice(index, 1);
+        docRef.set(user);
+      }
+    }).catch(error => {
+      this.presentAlert(error.message);
+    });
   }
 
   getNutritionists(name: string): Observable<UserId[]> {

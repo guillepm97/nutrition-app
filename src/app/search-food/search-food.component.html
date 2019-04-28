@@ -8,10 +8,12 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let item of food" lines="none" button="true" (click)="selectFood(item)">
-      {{item.name}}
-      <ion-note slot="end">{{item.calories}} kcal</ion-note>
-    </ion-item>
-  </ion-list>
+  <ng-container *ngIf="food$ | async as listFood">
+    <ion-list>
+      <ion-item *ngFor="let item of listFood" lines="none" button="true" (click)="selectFood(item)">
+        {{item.name}}
+        <ion-note slot="end">{{item.calories}} kcal</ion-note>
+      </ion-item>
+    </ion-list>
+  </ng-container>
 </ion-content>
