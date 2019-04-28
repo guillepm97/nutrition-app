@@ -29,7 +29,7 @@ export class AuthService {
     });
   }
 
-  async signUp(name: string, surname: string, email: string, password: string, type: string): Promise<boolean> {
+  async signUp(picture: string, name: string, surname: string, email: string, password: string, type: string): Promise<boolean> {
     return new Promise<boolean>(async (resolve, reject) => {
       let uid: string = await this.createUser(email, password);
 
@@ -37,7 +37,7 @@ export class AuthService {
         return resolve(false);
       }
 
-      if (await this.addAttributes(uid, name, surname, type)) {
+      if (await this.addAttributes(uid, picture, name, surname, type)) {
         resolve(true);
       } else {
         await this.deleteUser();
@@ -59,13 +59,14 @@ export class AuthService {
     });
   }
 
-  async addAttributes(uid: string, name: string, surname: string, type: string): Promise<boolean> {
+  async addAttributes(uid: string, picture: string, name: string, surname: string, type: string): Promise<boolean> {
     return new Promise<boolean>(async (resolve, reject) => {
       const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${uid}`);
 
       const isNutritionist = type == 'nutritionist';
 
       const data: User = {
+        picture: picture,
         name: name,
         surname: surname,
         type: type,

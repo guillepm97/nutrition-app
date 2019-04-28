@@ -14,7 +14,9 @@
     <ion-item *ngFor="let accepted$ of acceptedClients; index as i"
               [routerLink]="['./client-info/',user.listAccepted[i]]">
       <ion-avatar slot="start">
-        <img src="assets/img/client-avatar.png"
+        <img *ngIf="(accepted$ | async)?.picture != ''" [src]="(accepted$ | async)?.picture">
+        <img *ngIf="(accepted$ | async)?.picture == ''"
+             src="assets/img/client-avatar.png"
              srcset="assets/img/client-avatar@2x.png 2x,
                      assets/img/client-avatar@3x.png 3x">
       </ion-avatar>
@@ -31,9 +33,11 @@
   <ion-list>
     <ion-item *ngFor="let pending$ of pendingClients; index as i">
       <ion-avatar slot="start">
-        <img src="assets/img/client-avatar.png"
-            srcset="assets/img/client-avatar@2x.png 2x,
-                    assets/img/client-avatar@3x.png 3x">
+        <img *ngIf="(pending$ | async)?.picture != ''" [src]="(pending$ | async)?.picture">
+        <img *ngIf="(pending$ | async)?.picture == ''"
+             src="assets/img/client-avatar.png"
+             srcset="assets/img/client-avatar@2x.png 2x,
+                     assets/img/client-avatar@3x.png 3x">
       </ion-avatar>
       <ion-label>
         <h2>{{(pending$ | async)?.name}} {{(pending$ | async)?.surname}}</h2>
